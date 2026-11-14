@@ -1,0 +1,55 @@
+# dependencies and build output
+node_modules/
+dist/
+release/
+*.tsbuildinfo
+
+# the live database, uploads and backups — never committed
+data/
+app.db
+app.db-shm
+app.db-wal
+
+# environment and credentials
+.env
+.env.*
+tools/notify.env
+tools/ionos.env
+tools/last-url.txt
+refs/
+
+# updater working files
+tools/update/
+
+# Android build output and machine-specific files
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+*.apk
+*.aab
+
+# signing material and certificates
+*.pem
+*.key
+*.pfx
+*.p12
+*.jks
+*.keystore
+*.cer
+*.crt
+
+# logs
+*.log
+server.log
+
+# editor and OS noise
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# prebuilt node for android: the packaged copy lives in jniLibs
+android/app/libnode/bin/
+android/app/.cxx/
