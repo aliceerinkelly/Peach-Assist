@@ -55,6 +55,4 @@ uninstalled and no data is lost.
 `public/`, and keeps a backup. `scripts/make-release.mjs` builds the manifest and the
 Windows zip for a tag. The feed address goes in `tools/update.feed`.
 
-## Licence
-
-Not decided yet.
+## Licence MIT
