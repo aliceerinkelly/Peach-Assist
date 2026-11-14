@@ -1,0 +1,82 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/device.js"></script>
+<title>Room Â· Peach Assist</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+  body { background: var(--bg); display: flex; flex-direction: column; height: 100vh; }
+  .rhead {
+    display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+    background: var(--panel-tint, #fff); border-bottom: 1px solid var(--border);
+  }
+  .rhead .t { font-weight: 700; font-size: 15px; }
+  .rhead .s { font-size: 11.5px; color: var(--muted); }
+  .rhead .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+  .rbody { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .rmsg { max-width: min(80%, 620px); }
+  .rmsg .who { font-size: 10.5px; font-weight: 700; color: var(--muted); margin: 0 0 3px 3px; }
+  .rmsg .b {
+    padding: 8px 11px; border-radius: 10px; background: var(--panel-tint, #fff);
+    border: 1px solid var(--border); font-size: 13.2px; line-height: 1.45;
+    white-space: pre-wrap; overflow-wrap: anywhere;
+  }
+  .rmsg.mine { align-self: flex-end; }
+  .rmsg.mine .b { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .rmsg .ts { font-size: 10px; color: var(--faint); margin-top: 3px; }
+  .rmsg.mine .ts { text-align: right; }
+  .joinwrap { flex: 1; display: grid; place-items: center; padding: 24px; }
+  .joincard {
+    width: 100%; max-width: 360px; background: var(--panel-tint, #fff);
+    border: 1px solid var(--border); border-radius: 12px; padding: 20px;
+    box-shadow: var(--shadow);
+  }
+  .joincard h1 { font-size: 16px; margin: 0 0 4px; }
+  .joincard p { color: var(--muted); font-size: 12px; margin: 0 0 14px; }
+  .err { color: var(--red); font-size: 12px; min-height: 16px; margin-top: 8px; }
+</style>
+</head>
+<body>
+<header class="rhead">
+  <div class="dot"></div>
+  <div>
+    <div class="t" id="roomTitle">Room</div>
+    <div class="s" id="roomSub">Open room Â· anyone with the link can join</div>
+  </div>
+</header>
+
+<div class="joinwrap" id="joinWrap">
+  <div class="joincard">
+    <h1 id="joinTitle">Join the room</h1>
+    <p>Enter your name so people know who is talking.</p>
+    <div class="field">
+      <label for="name">Your name</label>
+      <input id="name" maxlength="32" placeholder="Your name" autocomplete="name">
+    </div>
+    <button class="btn primary" id="btnJoin" style="width:100%;margin-top:12px;padding:9px">Join room</button>
+    <div class="err" id="err"></div>
+  </div>
+</div>
+
+<main class="rbody" id="messages" style="display:none"></main>
+
+<footer class="composer" id="composer" style="display:none">
+  <div class="fieldwrap" style="flex:1;display:flex">
+    <textarea id="input" rows="1" placeholder="Type a message" style="width:100%"></textarea>
+  </div>
+  <button class="send" id="btnSend" title="Send" aria-label="Send">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m4 12 16-8-6 8 6 8-16-8Z"/></svg>
+  </button>
+</footer>
+
+<script src="/theme.js"></script>
+<script src="/room.js"></script>
+
+
+
+
+<!-- pm-frag:4/4 xSAhVUAlUOGgcICgUUXg== -->
+</body>
+</html>

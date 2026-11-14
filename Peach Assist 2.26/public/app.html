@@ -1,0 +1,804 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/device.js"></script>
+<title>Peach Assist</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="shell" id="shell">
+
+  <!-- icon rail -->
+  <nav class="rail">
+    <div class="logo" title="Peach Assist">P</div>
+    <button class="rbtn active" title="Peach Assist" aria-label="Peach Assist">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.5 9.5 0 0 1-3.5-.6L3 21l1.7-4.8A8.4 8.4 0 0 1 3.6 11.5a8.4 8.4 0 0 1 8.7-8.4A8.4 8.4 0 0 1 21 11.5Z"/></svg>
+      <span class="dot" id="railUnread" hidden></span>
+    </button>
+    <button class="rbtn" id="btnSearchRail" title="Search history" aria-label="Search history">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+    </button>
+    <button class="rbtn" id="btnArchiveRail" title="Archived" aria-label="Archived">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16v13H4z"/><path d="M3 4h18v3H3z"/><path d="M10 11h4"/></svg>
+    </button>
+    <button class="rbtn" id="btnStickyRail" title="Sticky notes" aria-label="Sticky notes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 4h14v10l-6 6H5z"/><path d="M19 14h-6v6"/></svg>
+    </button>
+    <button class="rbtn" id="btnRemindersRail" title="Reminders" aria-label="Reminders">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10.5 21a2 2 0 0 0 3 0"/></svg>
+      <span class="dot" id="railReminders" hidden></span>
+    </button>
+    <button class="rbtn" id="btnTasksRail" title="Tasks" aria-label="Tasks">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5h4v4H4z"/><path d="m5.5 12.5 2 2 3-3"/><path d="M11 6h9M11 13h9M11 19h6"/></svg>
+      <span class="dot" id="railTasks" hidden></span>
+    </button>
+    <button class="rbtn" id="btnWallRail" title="Peach Wall" aria-label="Peach Wall">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M3.5 10h17M3.5 14.5h17M9.5 5v14M15 5v14"/></svg>
+    </button>
+    <button class="rbtn" id="btnCalendarRail" title="Calendar" aria-label="Calendar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="M8 14h3M13 14h3M8 17h3"/></svg>
+    </button>
+    <button class="rbtn" id="btnLeaveRail" title="Time off" aria-label="Time off">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="7.5" width="17" height="12" rx="2"/><path d="M9 7.5V6a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1.5M3.5 12h17"/></svg>
+    </button>
+    <button class="rbtn" id="btnDriveRail" title="Drive" aria-label="Drive">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3.5 7.5A2 2 0 0 1 5.5 5.5h4l2 2.2h7a2 2 0 0 1 2 2v7.8a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z"/></svg>
+    </button>
+    <button class="rbtn" id="btnMailRail" title="Mail" aria-label="Mail">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m4 7 8 6 8-6"/></svg>
+      <span class="dot" id="railMail" hidden></span>
+    </button>
+    <button class="rbtn" id="btnHelpRail" title="Helpdesk" aria-label="Helpdesk" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 13h2.5v5H5a1.5 1.5 0 0 1-1.5-1.5V14a1 1 0 0 1 .5-1Z"/><path d="M20 13h-2.5v5H19a1.5 1.5 0 0 0 1.5-1.5V14a1 1 0 0 0-.5-1Z"/><path d="M18 18v.5a2.5 2.5 0 0 1-2.5 2.5H13"/></svg>
+      <span class="dot" id="railHelp" hidden></span>
+    </button>
+    <div class="spacer"></div>
+    <button class="rbtn" id="btnAdmin" title="Administration" aria-label="Administration" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.2M12 18.8V21M4.6 7.8l1.9 1.1M17.5 15.1l1.9 1.1M4.6 16.2l1.9-1.1M17.5 8.9l1.9-1.1"/></svg>
+    </button>
+    <button class="rbtn" id="btnManualRail" title="Manual" aria-label="Manual">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5A1.5 1.5 0 0 0 20 18.5z"/></svg>
+    </button>
+    <button class="rbtn" id="btnTheme" title="Colour theme" aria-label="Colour theme">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><circle cx="9" cy="9.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="9.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="8.5" cy="14.5" r="1.3" fill="currentColor" stroke="none"/><circle cx="15.5" cy="14.5" r="1.3" fill="currentColor" stroke="none"/></svg>
+    </button>
+    <div class="theme-pop" id="themePop">
+      <div class="tp-head">Colour theme</div>
+      <button class="theme-row" data-theme="blue"><span class="sw" style="background:#2f6fe4"></span>Ocean<span class="check">âœ“</span></button>
+      <button class="theme-row" data-theme="forest"><span class="sw" style="background:#158a52"></span>Forest<span class="check">âœ“</span></button>
+      <button class="theme-row" data-theme="violet"><span class="sw" style="background:#6a46d6"></span>Violet<span class="check">âœ“</span></button>
+      <button class="theme-row" data-theme="sunset"><span class="sw" style="background:#c2681c"></span>Sunset<span class="check">âœ“</span></button>
+      <button class="theme-row" data-theme="rose"><span class="sw" style="background:#c33b66"></span>Rose<span class="check">âœ“</span></button>
+    </div>
+    <div class="conn" id="conn" title="Connection"><span class="bulb"></span><span id="connText">â€¦</span></div>
+    <button class="rbtn" id="btnLogout" title="Sign out" aria-label="Sign out">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5"/><path d="M20 12H9"/><path d="M12 20H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7"/></svg>
+    </button>
+  </nav>
+
+  <!-- sidebar -->
+  <aside class="sidebar">
+    <div class="me">
+      <div class="avatar" id="meAvatar" style="background:#3f7ef7">A</div>
+      <div class="meta">
+        <div class="name" id="meName">Operator</div>
+        <div class="statusline">
+          <span class="presence-dot" id="meDot" style="background:var(--green)"></span>
+          <select class="status-select" id="meStatus">
+            <option>Online</option><option>Busy</option><option>Away</option><option>Idle</option><option>Offline</option>
+          </select>
+          <span class="caret">â–¾</span>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="iconbtn" id="btnSecurity" title="Two-factor sign-in">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4.5" y="10" width="15" height="10.5" rx="2"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><circle cx="12" cy="15" r="1.3"/></svg>
+        </button>
+        <button class="iconbtn" id="btnStatusMsg" title="Set a status message">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.5 9.5 0 0 1-3.5-.6L3 21l1.7-4.8A8.4 8.4 0 0 1 3.6 11.5 8.4 8.4 0 0 1 12.3 3 8.4 8.4 0 0 1 21 11.5Z"/></svg>
+        </button>
+        <button class="iconbtn" id="btnNewGroup" title="New group">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 19v-1.6a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V19"/><circle cx="9" cy="7" r="3.2"/><path d="M20 19v-1.6a4 4 0 0 0-3-3.8"/><path d="M15.5 4.2a3.2 3.2 0 0 1 0 6"/></svg>
+        </button>
+        <button class="iconbtn" id="btnNewClient" title="Invite a client" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="mystatus" id="myStatusLine" hidden></div>
+    <button class="clock-chip" id="clockChip" title="Work hours">
+      <span class="clock-dot" id="clockDot"></span>
+      <span id="clockText">Not on the clock</span>
+    </button>
+
+    <button class="announce-row" id="announceRow" hidden>
+      <div class="avatar ann">!</div>
+      <div class="body">
+        <div class="cname">Announcements</div>
+        <div class="preview" id="announcePreview">Team-wide notices</div>
+      </div>
+      <span class="unread" id="announceUnread" hidden></span>
+    </button>
+
+    <div class="searchbar">
+      <div class="searchbox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.2-3.2"/></svg>
+        <!-- type=search + a neutral name: Chrome autofills a bare text input with
+             the saved username, which then filters the whole sidebar away. -->
+        <input id="filterInput" type="search" name="q" placeholder="Search people or messages"
+               autocomplete="off" autocapitalize="off" spellcheck="false">
+      </div>
+      <!-- Search hits float here as comic bubbles; the sidebar list never filters. -->
+      <div class="search-bubbles" id="searchBubble" hidden></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="all">All</button>
+      <button class="tab" data-tab="unread">Unread</button>
+      <button class="tab" data-tab="archived">Archived</button>
+    </div>
+
+    <div class="contact-scroll" id="contacts"></div>
+    <div class="row-bubble" id="rowBubble" hidden></div>
+  </aside>
+
+  <!-- chat -->
+  <section class="chat" id="chat">
+    <div class="chat-empty" id="chatEmpty">
+      <div>
+        <div class="big">Select a conversation</div>
+        <div>Pick a colleague on the left, or start a group with the + beside Groups.</div>
+      </div>
+    </div>
+
+    <div id="chatMain" style="display:none; flex:1; min-height:0; flex-direction:column;">
+      <header class="chat-head">
+        <button class="iconbtn backbtn" id="btnBack" title="Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <div class="avatar" id="chatAvatar">C</div>
+        <div class="who">
+          <div class="cname" id="chatName">Client</div>
+          <div class="sub">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6"/></svg>
+            <span class="presence-dot" id="chatDot" style="background:#b9c4d0;width:8px;height:8px"></span>
+            <span id="chatStatus">Offline</span>
+          </div>
+        </div>
+        <div class="grow"></div>
+        <div class="head-tabs">
+          <button class="head-tab active" data-htab="chat">Chat</button>
+          <button class="head-tab" data-htab="images">Images</button>
+        <button class="iconbtn" id="btnMembers" title="Members" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 19v-1.6a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V19"/><circle cx="9" cy="7" r="3.2"/><path d="M20 19v-1.6a4 4 0 0 0-3-3.8"/></svg>
+        </button>
+        <button class="iconbtn" id="btnNotes" title="Private notes">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h7M9 17h5"/></svg>
+        </button>
+        <div class="menu-wrap">
+          <button class="iconbtn" id="btnMenu" title="More">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><circle cx="12" cy="5" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="12" cy="19" r="1.7"/></svg>
+          </button>
+          <div class="menu" id="chatMenu">
+            <button data-act="members"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M16 19v-1.6a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4V19"/><circle cx="9" cy="7" r="3.2"/><path d="M20 19v-1.6a4 4 0 0 0-3-3.8"/></svg>Members</button>
+            <button data-act="leave" class="danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5"/><path d="M20 12H9"/><path d="M12 20H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h7"/></svg>Leave group</button>
+            <div class="sep"></div>
+            <button data-act="link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></svg>Copy invite link</button>
+            <button data-act="regenerate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/><path d="M3 21v-5h5"/></svg>Regenerate link</button>
+            <button data-act="revoke" class="danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="m6 6 12 12"/></svg>Revoke link</button>
+            <div class="sep"></div>
+            <button data-act="transcript"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 4h16v16H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>Email transcript</button>
+            <button data-act="archive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16v13H4z"/><path d="M3 4h18v3H3z"/><path d="M10 11h4"/></svg><span id="archiveLabel">Archive conversation</span></button>
+            <button data-act="clear" class="danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6l1 14h10l1-14"/></svg>Clear chatâ€¦</button>
+            <button data-act="delete" class="danger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6 7v13h12V7"/><path d="M10 11v5M14 11v5"/></svg>Delete conversationâ€¦</button>
+          </div>
+        </div>
+      </header>
+
+      <div class="otr-banner" id="otrBanner" hidden>
+        <span>Off the record â€” these messages are never saved. Closing the chat clears them.</span>
+        <button id="btnOtrOff">Turn off</button>
+      </div>
+      <div class="messages" id="messages"></div>
+      <div class="typing" id="typing"><span class="dots"><span></span><span></span><span></span></span><span id="typingWho">typingâ€¦</span></div>
+
+      <div class="gallery" id="gallery" style="display:none"></div>
+
+      <div class="composer-note" id="ackChip" hidden>
+        <span>Next message asks for an acknowledgement</span>
+        <button id="ackChipClear" title="Cancel">Ã—</button>
+      </div>
+
+      <footer class="composer" id="composer">
+        <div class="menu-wrap">
+          <button class="iconbtn" id="btnTools" title="Tools">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2"/></svg>
+          </button>
+          <div class="menu tools" id="toolsMenu">
+            <button data-tool="poll"><span>Poll</span><span class="k">ask the group</span></button>
+            <button data-tool="preset"><span>Preset message</span><span class="k">saved replies</span></button>
+            <button data-tool="ack"><span id="ackToolLabel">Require acknowledgement</span><span class="k">next message</span></button>
+            <button data-tool="announce" id="announceTool" hidden><span id="announceToolLabel">Send as announcement</span><span class="k">next message</span></button>
+            <button data-tool="otr"><span id="otrToolLabel">Off the record</span><span class="k">not saved</span></button>
+            <div class="sep"></div>
+            <button data-tool="clip"><span>Screen clip</span><span class="k">grab, crop, send</span></button>
+            <div class="sep"></div>
+            <button data-tool="stickies"><span>Sticky notes</span><span class="k">just for you</span></button>
+            <button data-tool="reminders"><span>Reminders</span><span class="k">nudge me later</span></button>
+          </div>
+        </div>
+        <button class="iconbtn" id="btnAttach" title="Attach a file">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.5 12.6 21a5 5 0 0 1-7-7l8.6-8.6a3.4 3.4 0 0 1 4.8 4.8l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l7.9-7.9"/></svg>
+        </button>
+        <input type="file" id="fileInput" hidden>
+        <div class="fieldwrap">
+          <textarea id="composerInput" rows="1" placeholder="Type a message"></textarea>
+          <div class="slash-palette" id="slashPalette"></div>
+        </div>
+        <button class="send" id="btnSend" title="Send" aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m4 12 16-8-6 16-2.5-6.5L4 12Z"/></svg>
+        </button>
+      </footer>
+
+      <!-- notes drawer -->
+      <aside class="drawer" id="notesDrawer">
+        <div class="dhead">
+          <span>Private notes</span>
+          <div style="flex:1"></div>
+          <button class="iconbtn" id="btnNotesClose" title="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m6 6 12 12M18 6 6 18"/></svg>
+          </button>
+        </div>
+        <div class="dbody">
+          <div class="hint">Only you can see these. They are included in search.</div>
+          <textarea id="notesInput" placeholder="Notes about this clientâ€¦"></textarea>
+          <div class="hint" id="notesSaved"></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+<!-- invite modal -->
+<div class="modal-back" id="inviteModal">
+  <div class="modal">
+    <div class="mhead">Invite a client</div>
+    <div class="mbody">
+      <div class="field">
+        <label for="invName">Display name</label>
+        <input id="invName" placeholder="Campbell" autocomplete="off">
+      </div>
+      <div class="field">
+        <label for="invEmail">Email (optional, for reply notifications)</label>
+        <input id="invEmail" type="email" placeholder="campbell@example.com" autocomplete="off">
+      </div>
+      <div class="note">The link is the only way in. Anyone holding it is this client, so send it privately. You can regenerate or revoke it at any time.</div>
+      <div class="note" id="invAccess"></div>
+      <div id="inviteResult" style="display:none">
+        <div class="field">
+          <label>Invite link</label>
+          <div class="copyrow">
+            <input id="invLink" readonly>
+            <button class="btn" id="btnCopyInvite">Copy</button>
+          </div>
+        </div>
+        <div class="note">Shown once. Store it now â€” only a hash is kept on the server.</div>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn" id="inviteCancel">Close</button>
+      <button class="btn primary" id="inviteCreate">Create link</button>
+    </div>
+  </div>
+</div>
+
+<!-- search modal -->
+<div class="modal-back" id="searchModal">
+  <div class="modal" style="max-width:600px">
+    <div class="mhead">Search conversations</div>
+    <div class="mbody">
+      <div class="field">
+        <label for="srchQ">Keyword</label>
+        <input id="srchQ" placeholder="invoice, meeting, thanksâ€¦" autocomplete="off">
+      </div>
+      <div style="display:flex; gap:10px">
+        <div class="field" style="flex:1">
+          <label for="srchFrom">From</label>
+          <input id="srchFrom" type="date">
+        </div>
+        <div class="field" style="flex:1">
+          <label for="srchTo">To</label>
+          <input id="srchTo" type="date">
+        </div>
+      </div>
+      <div class="field">
+        <label for="srchClient">Client</label>
+        <select id="srchClient"><option value="">All clients</option></select>
+      </div>
+      <div class="search-results" id="searchResults"></div>
+    </div>
+    <div class="mfoot">
+      <button class="btn" id="searchClose">Close</button>
+      <button class="btn primary" id="searchRun">Search</button>
+    </div>
+  </div>
+</div>
+
+<!-- link modal (regenerate / copy) -->
+<div class="modal-back" id="linkModal">
+  <div class="modal">
+    <div class="mhead" id="linkModalTitle">Invite link</div>
+    <div class="mbody">
+      <div class="field">
+        <label>Link</label>
+        <div class="copyrow">
+          <input id="linkValue" readonly>
+          <button class="btn" id="btnCopyLink">Copy</button>
+        </div>
+      </div>
+      <div class="note" id="linkNote"></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="linkClose">Close</button></div>
+  </div>
+</div>
+
+<!-- new group -->
+<div class="modal-back" id="groupModal">
+  <div class="modal">
+    <div class="mhead">New group</div>
+    <div class="mbody">
+      <div class="field">
+        <label for="groupName">Group name</label>
+        <input id="groupName" placeholder="Design team" autocomplete="off">
+      </div>
+      <div class="field">
+        <label>Members</label>
+        <div class="pick-list" id="groupPeople"></div>
+      </div>
+    </div>
+    <div class="mfoot">
+      <button class="btn" id="groupCancel">Cancel</button>
+      <button class="btn primary" id="groupCreate">Create group</button>
+    </div>
+  </div>
+</div>
+
+<!-- status message -->
+<div class="modal-back" id="statusModal">
+  <div class="modal" style="max-width:420px">
+    <div class="mhead">Status message</div>
+    <div class="mbody">
+      <div class="field">
+        <label for="statusMsgInput">What are you up to?</label>
+        <input id="statusMsgInput" maxlength="120" placeholder="In a meeting until 3">
+      </div>
+      <div class="field">
+        <label for="autoReplyInput">Automatic reply when someone messages you</label>
+        <input id="autoReplyInput" maxlength="300" placeholder="In a meeting â€” back at 4">
+      </div>
+      <div class="note">Colleagues see the status line next to your name. The automatic reply is sent once per hour in a private chat while it is set.</div>
+    </div>
+    <div class="mfoot">
+      <button class="btn" id="statusMsgCancel">Cancel</button>
+      <button class="btn primary" id="statusMsgSave">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- members -->
+<div class="modal-back" id="membersModal">
+  <div class="modal" style="max-width:460px">
+    <div class="mhead">Members</div>
+    <div class="mbody">
+      <div class="member-list" id="memberList"></div>
+      <div class="field" style="margin-top:14px">
+        <label for="memberAdd">Add someone</label>
+        <div class="copyrow">
+          <select id="memberAdd"></select>
+          <button class="btn" id="memberAddBtn">Add</button>
+        </div>
+      </div>
+    </div>
+    <div class="mfoot"><button class="btn" id="membersClose">Close</button></div>
+  </div>
+</div>
+
+<!-- poll -->
+<div class="modal-back" id="pollModal">
+  <div class="modal">
+    <div class="mhead">New poll</div>
+    <div class="mbody">
+      <div class="field">
+        <label for="pollQuestion">Question</label>
+        <input id="pollQuestion" maxlength="200" placeholder="Where should we meet?">
+      </div>
+      <div class="field">
+        <label>Options</label>
+        <div class="poll-opts" id="pollOptions">
+          <input class="poll-opt" placeholder="Option 1">
+          <input class="poll-opt" placeholder="Option 2">
+          <input class="poll-opt" placeholder="Option 3">
+        </div>
+        <button class="btn ghost" id="pollAddOption">+ Add option</button>
+      </div>
+      <label class="pick-row">
+        <input type="checkbox" id="pollMulti">
+        <span class="pick-name">Allow more than one answer</span>
+      </label>
+    </div>
+    <div class="mfoot">
+      <button class="btn" id="pollCancel">Cancel</button>
+      <button class="btn primary" id="pollSend">Post poll</button>
+    </div>
+  </div>
+</div>
+
+<!-- preset messages -->
+<div class="modal-back" id="presetModal">
+  <div class="modal">
+    <div class="mhead">Preset messages</div>
+    <div class="mbody">
+      <div class="hint">Click one to send it straight away. Typing a slash in the message box also lists these.</div>
+      <div class="preset-list" id="presetList"></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="presetClose">Close</button></div>
+  </div>
+</div>
+
+<!-- sticky notes -->
+<div class="modal-back" id="stickyModal">
+  <div class="modal">
+    <div class="mhead">Sticky notes</div>
+    <div class="mbody">
+      <div class="field">
+        <label for="stickyBody">New note</label>
+        <textarea id="stickyBody" rows="3" maxlength="2000" placeholder="Anything you need to rememberâ€¦"></textarea>
+      </div>
+      <div class="copyrow" style="margin-bottom:14px">
+        <select id="stickyColour">
+          <option value="amber">Amber</option>
+          <option value="green">Green</option>
+          <option value="blue">Blue</option>
+          <option value="rose">Rose</option>
+        </select>
+        <button class="btn primary" id="stickyAdd">Add note</button>
+      </div>
+      <div class="sticky-list" id="stickyList"></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="stickyClose">Close</button></div>
+  </div>
+</div>
+
+<!-- reminders -->
+<div class="modal-back" id="reminderModal">
+  <div class="modal">
+    <div class="mhead">Reminders</div>
+    <div class="mbody">
+      <div class="field">
+        <label for="reminderBody">Remind me to</label>
+        <input id="reminderBody" maxlength="300" placeholder="Send the invoice">
+      </div>
+      <div class="field">
+        <label for="reminderWhen">When</label>
+        <input id="reminderWhen" type="datetime-local">
+      </div>
+      <button class="btn primary" id="reminderAdd">Set reminder</button>
+      <div class="reminder-list" id="reminderList"></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="reminderClose">Close</button></div>
+  </div>
+</div>
+
+<!-- screen clip -->
+<div class="modal-back" id="clipModal">
+  <div class="modal wide">
+    <div class="mhead">Screen clip</div>
+    <div class="mbody">
+      <div class="clip-bar">
+        <button class="chip on" id="clipCrop">Crop</button>
+        <button class="chip" id="clipPen">Draw</button>
+        <button class="chip" id="clipArrow">Arrow</button>
+        <span class="clip-colours" id="clipColours">
+          <button class="swatch on" data-colour="#e5484d" style="background:#e5484d"></button>
+          <button class="swatch" data-colour="#f5a524" style="background:#f5a524"></button>
+          <button class="swatch" data-colour="#30a46c" style="background:#30a46c"></button>
+          <button class="swatch" data-colour="#3b82f6" style="background:#3b82f6"></button>
+        </span>
+        <button class="chip" id="clipUndo">Undo</button>
+        <button class="chip" id="clipReset">Reset</button>
+        <button class="chip" id="clipRetake">Retake</button>
+      </div>
+      <div class="clip-stage" id="clipStage"><canvas id="clipCanvas"></canvas></div>
+      <div class="hint" id="clipHint">Drag to choose the part you want, then draw or add an arrow on top.</div>
+    </div>
+    <div class="mfoot">
+      <button class="btn" id="clipCancel">Cancel</button>
+      <button class="btn primary" id="clipSend">Send to chat</button>
+    </div>
+  </div>
+</div>
+
+<!-- tasks -->
+<div class="modal-back" id="tasksModal">
+  <div class="modal wide">
+    <div class="mhead">Tasks</div>
+    <div class="mbody">
+      <div class="task-new">
+        <input id="taskTitle" maxlength="200" placeholder="What needs doing?" autocomplete="off">
+        <div class="task-new-row">
+          <select id="taskAssignee"><option value="">Me</option></select>
+          <input id="taskDue" type="datetime-local" title="Due">
+          <label class="pick-row inline"><input type="checkbox" id="taskHigh"><span class="pick-name">High</span></label>
+          <button class="btn primary" id="taskAdd">Add task</button>
+        </div>
+        <label class="pick-row" id="taskAttachRow" hidden>
+          <input type="checkbox" id="taskAttach">
+          <span class="pick-name" id="taskAttachLabel">Pin to the open chat</span>
+        </label>
+      </div>
+      <div class="tabs task-tabs">
+        <button class="tab active" data-tfilter="open">Open</button>
+        <button class="tab" data-tfilter="mine">Made by me</button>
+        <button class="tab" data-tfilter="assigned">Assigned to me</button>
+        <button class="tab" data-tfilter="done">Done</button>
+      </div>
+      <div class="task-list" id="taskList"></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="tasksClose">Close</button></div>
+  </div>
+</div>
+
+<!-- calendar -->
+<div class="modal-back" id="calModal">
+  <div class="modal wide">
+    <div class="mhead">Calendar</div>
+    <div class="mbody">
+      <div class="cal-bar">
+        <button class="iconbtn" id="calPrev" title="Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <button class="btn ghost" id="calToday">Today</button>
+        <button class="iconbtn" id="calNext" title="Forward">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m9 6 6 6-6 6"/></svg>
+        </button>
+        <div class="cal-title" id="calTitle">This week</div>
+        <div class="grow"></div>
+        <div class="seg">
+          <button class="chip on" id="calDayBtn">Day</button>
+          <button class="chip" id="calWeekBtn">Week</button>
+        </div>
+        <button class="btn primary" id="calNew">New meeting</button>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-links">
+        <button class="btn ghost" id="calFeed">Subscribe in Google Calendar</button>
+        <button class="btn ghost" id="calDownload">Download .ics</button>
+        <button class="btn ghost" id="calImport">Import .ics</button>
+        <input type="file" id="calImportFile" accept=".ics,text/calendar" hidden>
+        <button class="btn ghost" id="calLeave">Time off</button>
+      </div>
+      <div class="hint cal-feed" id="calFeedBox" hidden></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="calClose">Close</button></div>
+  </div>
+</div>
+
+<!-- new / edit meeting -->
+<div class="modal-back" id="meetModal">
+  <div class="modal">
+    <div class="mhead" id="meetTitle">New meeting</div>
+    <div class="mbody">
+      <div class="field">
+        <label for="meetName">Title</label>
+        <input id="meetName" maxlength="200" placeholder="Weekly review">
+      </div>
+      <div class="row2cols">
+        <div class="field">
+          <label for="meetDate">Date</label>
+          <input id="meetDate" type="date">
+        </div>
+        <div class="field">
+          <label for="meetPlace">Place</label>
+          <input id="meetPlace" maxlength="200" placeholder="Room 2 or a video link">
+        </div>
+      </div>
+      <div class="row2cols">
+        <div class="field">
+          <label for="meetFrom">From</label>
+          <input id="meetFrom" type="time" step="900">
+        </div>
+        <div class="field">
+          <label for="meetTo">To</label>
+          <input id="meetTo" type="time" step="900">
+        </div>
+      </div>
+      <div class="field">
+        <label for="meetNotes">Agenda (optional)</label>
+        <textarea id="meetNotes" rows="2" maxlength="4000"></textarea>
+      </div>
+      <div class="field">
+        <label>Invite</label>
+        <div class="pick-list" id="meetPeople"></div>
+      </div>
+      <label class="pick-row">
+        <input type="checkbox" id="meetChat" checked>
+        <span class="pick-name">Create a chat for this meeting</span>
+      </label>
+    </div>
+    <div class="mfoot">
+      <button class="btn" id="meetCancel">Cancel</button>
+      <button class="btn primary" id="meetSave">Save meeting</button>
+    </div>
+  </div>
+</div>
+
+<!-- meeting details -->
+<div class="modal-back" id="eventModal">
+  <div class="modal">
+    <div class="mhead" id="eventTitle">Meeting</div>
+    <div class="mbody" id="eventBody"></div>
+    <div class="mfoot" id="eventFoot">
+      <button class="btn" id="eventClose">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- time off -->
+<div class="modal-back" id="leaveModal">
+  <div class="modal">
+    <div class="mhead">Time off</div>
+    <div class="mbody">
+      <div class="row2cols">
+        <div class="field">
+          <label for="leaveKind">Type</label>
+          <select id="leaveKind">
+            <option value="annual">Annual leave</option>
+            <option value="sick">Sick leave</option>
+            <option value="personal">Personal</option>
+            <option value="unpaid">Unpaid</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="leaveFrom">From</label>
+          <input id="leaveFrom" type="date">
+        </div>
+      </div>
+      <div class="row2cols">
+        <div class="field">
+          <label for="leaveTo">To</label>
+          <input id="leaveTo" type="date">
+        </div>
+        <div class="field">
+          <label for="leaveReason">Reason (optional)</label>
+          <input id="leaveReason" maxlength="500" placeholder="Family trip">
+        </div>
+      </div>
+      <button class="btn primary" id="leaveSend">Request time off</button>
+      <div class="hint">Weekends and public holidays are not counted.</div>
+      <div class="leave-list" id="leaveList"></div>
+      <h4 class="subhead small">Who is off</h4>
+      <div class="leave-team" id="leaveTeam"></div>
+      <h4 class="subhead small">Public holidays</h4>
+      <div class="leave-holidays" id="leaveHolidays"></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="leaveClose">Close</button></div>
+  </div>
+</div>
+
+<!-- two-factor sign-in -->
+<div class="modal-back" id="twofaModal">
+  <div class="modal">
+    <div class="mhead">Two-factor sign-in</div>
+    <div class="mbody">
+      <p class="note" id="twofaIntro">A six-digit code from an authenticator app, on top of your password.</p>
+      <div id="twofaStartBox">
+        <button class="btn primary" id="twofaStart">Set up two-factor</button>
+      </div>
+      <div id="twofaStep2" hidden>
+        <p class="hint">Add this key to Google Authenticator, Microsoft Authenticator, 1Password or Authy, then type the six digits it shows.</p>
+        <div class="twofa-secret" id="twofaSecret"></div>
+        <input id="twofaCode" class="twofa-code" maxlength="6" inputmode="numeric" placeholder="123456" autocomplete="one-time-code">
+        <button class="btn primary" id="twofaConfirm">Turn on</button>
+      </div>
+      <div id="twofaOnBox" hidden>
+        <p class="note">Two-factor sign-in is on for this account.</p>
+        <input id="twofaPassword" class="twofa-code" type="password" placeholder="Your password" autocomplete="current-password">
+        <button class="btn danger" id="twofaDisable">Turn off</button>
+      </div>
+      <div class="hint" id="twofaHint"></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="twofaClose">Close</button></div>
+  </div>
+</div>
+
+<!-- Peach Wall -->
+<div class="modal-back" id="wallModal">
+  <div class="modal wide">
+    <div class="mhead">Peach Wall</div>
+    <div class="mbody">
+      <div class="wall-new">
+        <textarea id="wallInput" rows="3" maxlength="2000" placeholder="Share something with the teamâ€¦"></textarea>
+        <div class="wall-new-row">
+          <span class="hint">Everyone signed in sees the wall. Posts keep their author.</span>
+          <button class="btn primary" id="wallPost">Post</button>
+        </div>
+      </div>
+      <div class="wall-list" id="wallList"></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="wallClose">Close</button></div>
+  </div>
+</div>
+
+<!-- drive -->
+<div class="modal-back" id="driveModal">
+  <div class="modal wide">
+    <div class="mhead">Drive</div>
+    <div class="mbody">
+      <div class="drive-bar">
+        <div class="seg">
+          <button class="chip on" id="driveMineBtn">My Drive</button>
+          <button class="chip" id="driveRoomBtn">Room drives</button>
+        </div>
+        <select id="driveRoomPick" class="drive-room-pick" hidden></select>
+        <div class="grow"></div>
+        <button class="btn" id="driveNewFolder">New folder</button>
+        <button class="btn primary" id="driveUploadBtn">Upload</button>
+        <input type="file" id="driveFile" hidden>
+      </div>
+      <div class="drive-crumbs" id="driveCrumbs"></div>
+      <div class="drive-list" id="driveList"></div>
+      <div class="drive-usage" id="driveUsage"></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="driveClose">Close</button></div>
+  </div>
+</div>
+
+<!-- internal mail -->
+<div class="modal-back" id="mailModal">
+  <div class="modal wide">
+    <div class="mhead">Mail</div>
+    <div class="mbody mail-body">
+      <div class="mail-side">
+        <div class="seg mail-tabs">
+          <button class="chip on" data-mfolder="inbox">Inbox</button>
+          <button class="chip" data-mfolder="sent">Sent</button>
+        </div>
+        <div class="mail-list" id="mailList"></div>
+        <button class="btn primary mail-write" id="mailWrite">Write</button>
+      </div>
+      <div class="mail-main" id="mailMain"></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="mailClose">Close</button></div>
+  </div>
+</div>
+
+<!-- helpdesk -->
+<div class="modal-back" id="helpModal">
+  <div class="modal wide">
+    <div class="mhead">Helpdesk</div>
+    <div class="mbody">
+      <div class="seg help-filters" id="helpFilters">
+        <button class="chip on" data-hstatus="">All</button>
+        <button class="chip" data-hstatus="open">Open</button>
+        <button class="chip" data-hstatus="pending">Waiting</button>
+        <button class="chip" data-hstatus="resolved">Resolved</button>
+      </div>
+      <div class="help-list" id="helpList"></div>
+    </div>
+    <div class="mfoot"><button class="btn" id="helpClose">Close</button></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/theme.js"></script>
+<script src="/app.js"></script>
+
+
+
+
+<!-- pm-frag:1/4 FlNUAAwcBQABUBVTBBZdV1 -->
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="/device.js"></script>
+<meta name="theme-color" content="#2f6fe4">
+<title>Conversation</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+  body { background: #eef2f7; }
+  .client-shell {
+    max-width: 760px; margin: 0 auto; height: 100vh;
+    display: flex; flex-direction: column; background: #fff;
+    box-shadow: 0 0 40px rgba(28,45,66,.08);
+  }
+  .client-head {
+    display: flex; align-items: center; gap: 11px; padding: 11px 14px;
+    background: #fff; border-bottom: 1px solid var(--border);
+  }
+  .client-head .cname { font-weight: 700; font-size: 15px; }
+  .client-head .sub { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 11.5px; }
+  .client-head .grow { flex: 1; }
+  .client-body { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+  .namecard {
+    position: absolute; inset: 0; background: #fff; display: grid; place-items: center; padding: 24px; z-index: 20;
+  }
+  .namecard .card { width: 100%; max-width: 380px; }
+  .namecard h1 { font-size: 19px; margin: 0 0 4px; }
+  .namecard p { color: var(--muted); font-size: 12.5px; margin: 0 0 16px; }
+  .foot-note {
+    text-align: center; color: var(--faint); font-size: 10.5px; padding: 0 0 8px; background: #fff;
+  }
+  .foot-note a { color: var(--faint); }
+</style>
+</head>
+<body>
+<div class="client-shell" id="shell">
+  <header class="client-head">
+    <div class="avatar" id="opAvatar" style="background:#2f6fe4">O</div>
+    <div>
+      <div class="cname" id="opName">Operator</div>
+      <div class="sub">
+        <span class="presence-dot" id="opDot" style="background:#b9c4d0;width:8px;height:8px"></span>
+        <span id="opStatus">Offline</span>
+      </div>
+    </div>
+    <div class="grow"></div>
+    <button class="iconbtn" id="btnTranscript" title="Email me a transcript">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 5h16v14H4z"/><path d="m4 6 8 6 8-6"/></svg>
+    </button>
+    <button class="iconbtn" id="btnRefresh" title="Reload">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg>
+    </button>
+  </header>
+
+  <div class="client-body">
+    <div class="messages" id="messages"></div>
+    <div class="typing" id="typing"><span class="dots"><span></span><span></span><span></span></span><span id="typingWho">typing…</span></div>
+    <footer class="composer">
+      <button class="iconbtn" id="btnAttach" title="Attach a file">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.5 12.6 21a5 5 0 0 1-7-7l8.6-8.6a3.4 3.4 0 0 1 4.8 4.8l-8.6 8.6a1.7 1.7 0 0 1-2.4-2.4l7.9-7.9"/></svg>
+      </button>
+      <input type="file" id="fileInput" hidden>
+      <div class="fieldwrap">
+        <textarea id="composerInput" rows="1" placeholder="Type a message"></textarea>
+      </div>
+      <button class="send" id="btnSend" title="Send" aria-label="Send">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m4 12 16-8-6 16-2.5-6.5L4 12Z"/></svg>
+      </button>
+    </footer>
+    <div class="foot-note" id="footNote"></div>
+  </div>
+
+  <div class="namecard" id="namecard" style="display:none">
+    <div class="card">
+      <h1>Welcome</h1>
+      <p>Tell us who you are so replies are addressed to you.</p>
+      <div class="field">
+        <label for="clientName">Your name</label>
+        <input id="clientName" placeholder="Your name" autocomplete="name">
+      </div>
+      <div class="field" style="margin-top:10px">
+        <label for="clientEmail">Email (optional)</label>
+        <input id="clientEmail" type="email" placeholder="you@example.com" autocomplete="email">
+        <div class="note" style="margin-top:4px">Only used to notify you of replies and send transcripts.</div>
+      </div>
+      <button class="btn primary" id="btnNameSave" style="margin-top:14px; width:100%; padding:9px">Start conversation</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="/theme.js"></script>
+<script src="/client.js"></script>
+</body>
+</html>
