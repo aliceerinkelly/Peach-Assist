@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/device.js"></script>
+<title>Create an account · Peach Assist</title>
+<link rel="stylesheet" href="/style.css">
+<style>
+  body { display: grid; place-items: center; background: #eef2f7; }
+  .signup-wrap { width: 100%; max-width: 390px; padding: 24px; }
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .brand .logo {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent-2), var(--accent)); color: #fff;
+    display: grid; place-items: center; font-weight: 700; box-shadow: 0 6px 16px rgba(28,45,66,.18);
+  }
+  .brand .t { font-weight: 700; font-size: 16px; }
+  .brand .s { color: var(--muted); font-size: 11.5px; }
+  .card { background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); padding: 20px; }
+  .card h1 { font-size: 15px; margin: 0 0 4px; }
+  .card p.lead { color: var(--muted); font-size: 12px; margin: 0 0 14px; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 5px; }
+  .field input { width: 100%; padding: 9px 10px; border: 1px solid var(--border); border-radius: 8px; font: inherit; }
+  .field input:focus { outline: 2px solid rgba(28,45,66,.18); outline-offset: 1px; }
+  .btn { width: 100%; padding: 9px; }
+  .msg { font-size: 12px; margin-top: 10px; min-height: 16px; }
+  .msg.err { color: var(--red); }
+  .msg.ok { color: #2f9e5f; }
+  .foot { text-align: center; font-size: 12px; color: var(--muted); margin-top: 14px; }
+  .foot a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="signup-wrap">
+  <div class="brand">
+    <div class="logo">M</div>
+    <div>
+      <div class="t">Peach Assist</div>
+      <div class="s">Business conversations</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h1>Create an account</h1>
+    <p class="lead">Your account is an ordinary member account. An administrator can change your role later.</p>
+
+    <div class="field">
+      <label for="name">Your name</label>
+      <input id="name" name="name" autocomplete="name" maxlength="60" autofocus>
+    </div>
+    <div class="field">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" autocomplete="email" maxlength="120">
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="new-password" minlength="8">
+    </div>
+
+    <button class="btn" id="go">Create account</button>
+    <div class="msg" id="msg"></div>
+  </div>
+
+  <p class="foot">Already have an account? <a href="/login">Sign in</a></p>
+</div>
+
+<script>
+  var form = { name: document.getElementById('name'), email: document.getElementById('email'), password: document.getElementById('password') };
+  var msg = document.getElementById('msg');
+  var go = document.getElementById('go');
+
+  function say(text, cls) {
+    msg.textContent = text;
+    msg.className = 'msg' + (cls ? ' ' + cls : '');
+  }
+
+  async function submit() {
+    var name = form.name.value.trim();
+    var email = form.email.value.trim();
+    var password = form.password.value;
+    if (name.length < 2) return say('Enter your name.', 'err');
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return say('Enter a valid email address.', 'err');
+    if (password.length < 8) return say('Choose a password of at least 8 characters.', 'err');
+
+    go.disabled = true;
+    say('Creating your account…');
+    try {
+      var res = await fetch('/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: name, email: email, password: password })
+      });
+      var data = await res.json().catch(function () { return {}; });
+      if (!res.ok) {
+        say(data.error || 'That did not work. Try again.', 'err');
+        go.disabled = false;
+        return;
+      }
+      say('Account created. Taking you to sign in…', 'ok');
+      setTimeout(function () { location.href = '/login'; }, 1200);
+    } catch (err) {
+      say('Could not reach the server.', 'err');
+      go.disabled = false;
+    }
+  }
+
+  go.addEventListener('click', submit);
+  [form.name, form.email, form.password].forEach(function (el) {
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter') submit(); });
+  });
+</script>
+</body>
+</html>
