@@ -53,3 +53,6 @@ desktop.ini
 # prebuilt node for android: the packaged copy lives in jniLibs
 android/app/libnode/bin/
 android/app/.cxx/
+
+# the download folder keeps the built APK on purpose
+!Peach Assist */*.apk
