@@ -52,4 +52,4 @@ panel. Version 2.26 is the current release.
 
 ## Licence
 
-Not decided yet.
+MIT. See LICENSE.
